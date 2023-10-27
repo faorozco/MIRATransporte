@@ -1,0 +1,35 @@
+<div>
+  <div class="card-mira m-2 shadow">
+    <div class="d-flex justify-content-center mb-4">
+      <button
+        type="button"
+        routerLink="../"
+        class="mx-4 rounded-5 btn-lg btn-warning"
+      >
+        <strong>Volver</strong>
+      </button>
+    </div>
+    <div class="text-center">
+      <h2>Buscar casa de apoyo</h2>
+    </div>
+    <label for="text" class="form-label"
+      >Buscar por barrio, puesto de votación o coordinador</label
+    >
+
+    <div>
+      <input
+        placeholder="Escriba aquí"
+        (keyup)="filtrarCasas(text.value)"
+        type="text"
+        class="form-control"
+        id="exampleInputEmail1"
+        aria-describedby="emailHelp"
+        #text
+      />
+    </div>
+  </div>
+
+  <div class="card-mira m-2 shadow">
+    <app-card-info [casasApoyo]="resultadosFiltrados"></app-card-info>
+  </div>
+</div>

@@ -1,0 +1,548 @@
+<div class="form">
+  <div class="container">
+    <!-- ******** PRIMER FORMULARIO DE USO ************* -->
+
+    <form (ngSubmit)="onSubmitUse()" [formGroup]="formUse">
+      <div class="row">
+        <div class="my-2 col-12 text-center">
+          <h1><strong> Reportar:</strong></h1>
+          <div
+            class="btn-group"
+            role="group2"
+            aria-label="Basic radio toggle button group"
+          >
+            <input
+              type="radio"
+              class="btn-check"
+              id="btnradio4"
+              autocomplete="off"
+              [value]="'SI'"
+              formControlName="vehiculoUso"
+              name="vehiculoUso"
+            />
+            <label class="btn btn-outline-danger" for="btnradio4"
+              >Vehículo ocupado</label
+            >
+
+            <input
+              type="radio"
+              class="btn-check"
+              id="btnradio5"
+              autocomplete="off"
+              checked
+              [value]="'NO'"
+              formControlName="vehiculoUso"
+              name="vehiculoUso"
+            />
+            <label class="btn btn-outline-primary" for="btnradio5"
+              >Solicitud vehículo</label
+            >
+            <input
+              type="radio"
+              class="btn-check"
+              id="btnradio20"
+              autocomplete="off"
+              checked
+              [value]="'activar'"
+              formControlName="vehiculoUso"
+              name="vehiculoUso"
+            />
+            <label class="btn btn-outline-success" for="btnradio20"
+              >Vehículo desocupado</label
+            >
+          </div>
+        </div>
+        <div
+          *ngIf="formUse.get('vehiculoUso')?.value === 'SI'"
+          class="col-sm-6"
+          class="row mx-0"
+        >
+          <div class="text-center">
+            <h2 class="my-2">Nombre del conductor ocupado:</h2>
+          </div>
+
+          <div class="ng-autocomplete w-100">
+            <ng-autocomplete
+              [data]="conductores"
+              formControlName="nameDriver"
+              [searchKeyword]="'name'"
+              placeholder="Seleccione el conductor"
+              [itemTemplate]="itemTemplate"
+              [notFoundTemplate]="notFoundTemplate">
+            </ng-autocomplete>
+
+            <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.name"></a>
+            </ng-template>
+
+            <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+            </ng-template>
+            </div>
+
+
+          <div>
+            <label for="exampleFormControlInput1" class="mt-5 text-center">
+              ¿Tiempo de ocupación?
+            </label>
+            <select class="form-select" formControlName="timeOut">
+              <option value="30 minutos">30 minutos</option>
+              <option value="45 minutos">45 minutos</option>
+              <option value="60 minutos">1 hora</option>
+              <option value="90 minutos">1 hora y 30 min</option>
+              <option value="120 minutos">2 horas</option>
+              <option value="Retirado">Retiro total</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="formUse.get('vehiculoUso')?.value === 'SI'" class="row">
+        <div class="my-5 d-flex justify-content-center">
+          <button
+            type="button"
+            routerLink="../"
+            class="mx-4 rounded-5 btn-lg btn-warning"
+          >
+            <strong>Volver</strong>
+          </button>
+          <button
+            type="submit"
+            (onClick)="onSubmitUse()"
+            [disabled]="formUse.invalid"
+            [ngClass]="{ 'disabled-button': formUse.invalid }"
+            class="mx-4 rounded-5 btn-lg btn-danger"
+          >
+            Enviar
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <!-- ******** FIN PRIMER FORMULARIO DE USO ************* -->
+
+    <!-- ***********INICIO SEGUNDO FORMULARIO SOLICITU VEHICULO **************-->
+
+    <form (ngSubmit)="onSubmit(telefono)" [formGroup]="form">
+      <div *ngIf="formUse.get('vehiculoUso')?.value === 'NO'">
+        <div class="row">
+          <div class="col-xs-12 my-4 text-center">
+            <p>¿En qué ciudad vota la persona?</p>
+            <div
+              class="btn-group"
+              role="group1"
+              aria-label="Basic radio toggle button group"
+            >
+              <input
+                type="radio"
+                class="btn-check"
+                id="btnradio1"
+                autocomplete="off"
+                checked
+                [value]="'Dosquebradas'"
+                formControlName="ciudad"
+                name="ciudad"
+              />
+              <label class="btn btn-outline-primary" for="btnradio1"
+                >Dosquebradas</label
+              >
+
+              <input
+                type="radio"
+                class="btn-check"
+                id="btnradio2"
+                autocomplete="off"
+                [value]="'Pereira'"
+                formControlName="ciudad"
+                name="ciudad"
+              />
+              <label class="btn btn-outline-warning" for="btnradio2"
+                >Pereira</label
+              >
+
+              <input
+                type="radio"
+                class="btn-check"
+                id="btnradio3"
+                autocomplete="off"
+                [value]="'Santa Rosa'"
+                formControlName="ciudad"
+                name="ciudad"
+              />
+              <label class="btn btn-outline-danger" for="btnradio3"
+                >St Rosa</label
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12 text-center">
+            <p>Tipo de vehiculo</p>
+            <div
+              class="btn-group"
+              role="group4"
+              aria-label="Basic radio toggle button group"
+            >
+              <input
+                type="radio"
+                class="btn-check"
+                id="btnradio8"
+                autocomplete="off"
+                [value]="'CARRO'"
+                formControlName="tipoVehiculo"
+                name="tipoVehiculo"
+              />
+              <label class="btn btn-outline-danger" for="btnradio8"
+                >CARRO</label
+              >
+
+              <input
+                type="radio"
+                class="btn-check"
+                id="btnradio9"
+                autocomplete="off"
+                checked
+                [value]="'MOTO'"
+                formControlName="tipoVehiculo"
+                name="tipoVehiculo"
+              />
+              <label class="btn btn-outline-primary" for="btnradio9"
+                >MOTO</label
+              >
+            </div>
+            <div
+              *ngIf="form.get('tipoVehiculo')?.value === 'CARRO'"
+              class="row"
+            >
+              <div class="my-2 col-12">
+                <div
+                  class="btn-group"
+                  role="group5"
+                  aria-label="Basic radio toggle button group"
+                >
+                  <input
+                    checked
+                    type="radio"
+                    class="btn-check"
+                    id="btnradio10"
+                    autocomplete="off"
+                    [value]="'1'"
+                    formControlName="cupos"
+                    name="cupos"
+                  />
+                  <label class="btn btn-outline-primary" for="btnradio10"
+                    >1</label
+                  >
+
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    id="btnradio11"
+                    autocomplete="off"
+                    [value]="'2'"
+                    formControlName="cupos"
+                    name="cupos"
+                  />
+                  <label class="btn btn-outline-primary" for="btnradio11"
+                    >2</label
+                  >
+
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    id="btnradio12"
+                    autocomplete="off"
+                    [value]="'3'"
+                    formControlName="cupos"
+                    name="cupos"
+                  />
+                  <label class="btn btn-outline-primary" for="btnradio12"
+                    >3</label
+                  >
+
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    id="btnradio13"
+                    autocomplete="off"
+                    [value]="'4'"
+                    formControlName="cupos"
+                    name="cupos"
+                  />
+                  <label class="btn btn-outline-primary" for="btnradio13"
+                    >4</label
+                  >
+                </div>
+                <p>Número de cupos</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          *ngIf="form.get('tipoVehiculo')?.value === 'CARRO'"
+          class="col-12 my-4 text-center"
+        >
+          <p>¿Necesita transportar silla de ruedas?</p>
+          <div
+            class="btn-group"
+            role="group3"
+            aria-label="Basic radio toggle button group"
+          >
+            <input
+              type="radio"
+              class="btn-check"
+              id="btnradio6"
+              autocomplete="off"
+              [value]="'SI'"
+              formControlName="discap"
+              name="discap"
+            />
+            <label class="btn btn-outline-danger" for="btnradio6">SI</label>
+
+            <input
+              type="radio"
+              class="btn-check"
+              id="btnradio7"
+              autocomplete="off"
+              checked
+              [value]="'NO'"
+              formControlName="discap"
+              name="discap"
+            />
+            <label class="btn btn-outline-warning" for="btnradio7">NO</label>
+          </div>
+        </div>
+
+        <div
+          *ngIf="form.get('tipoVehiculo')?.value !== 'null'"
+          class="row my-5"
+        >
+          <div class="col-sm-6 mb-2">
+            <label for="exampleFormControlInput1" class="m-0"
+              >Nombre del votante</label
+            >
+            <input
+              type="string"
+              class="form-control"
+              id="exampleFormControlInput1"
+              formControlName="nameVoter"
+              autocomplete="off"
+            />
+            <div
+              *ngIf="form.get('nameVoter')?.touched && form.get('nameVoter')?.errors?.['required']"
+              class="text-danger"
+            >
+              Campo requerido
+            </div>
+          </div>
+
+          <div class="col-sm-6 mb-2">
+            <label for="exampleFormControlInput1" class="m-0"
+              >Teléfono para contactar al votante</label
+            >
+            <input
+              type="string"
+              class="form-control"
+              id="exampleFormControlInput1"
+              formControlName="phone"
+              autocomplete="off"
+            />
+            <div
+              *ngIf="
+                form.get('phone')?.touched &&
+                form.get('phone')?.value.length > 10
+              "
+              class="text-danger"
+            >
+              Verifique, solo pueden ser 10 digitos
+            </div>
+            <div
+              *ngIf="
+                form.get('phone')?.touched &&
+                form.get('phone')?.value.length < 10
+              "
+              class="text-danger"
+            >
+              No pueden ser menos de 10 dígitos
+            </div>
+          </div>
+
+          <div class="col-sm-6 mb-2">
+            <label for="exampleFormControlInput1" class="m-0"
+              >Lugar a donde se recoge al votante</label
+            >
+            <input
+              type="string"
+              class="form-control"
+              id="exampleFormControlInput1"
+              formControlName="LugarRecogida"
+              autocomplete="off"
+            />
+            <div
+              *ngIf="form.get('LugarRecogida')?.touched && form.get('LugarRecogida')?.errors?.['required']"
+              class="text-danger"
+            >
+              Campo requerido
+            </div>
+          </div>
+
+          <div
+            *ngIf="form.get('ciudad')?.value === 'Dosquebradas'"
+            class="col-sm-6 mb-2"
+          >
+            <label for="exampleFormControlInput1" class="m-0"
+              >¿A dónde llevar a la persona?</label
+            >
+
+            <div class="ng-autocomplete w-100">
+              <ng-autocomplete
+                [data]="arrayPuestos"
+                formControlName="lugarVotacion"
+                [searchKeyword]="'puesto'"
+                placeholder="Seleccione el puesto de votación"
+                [itemTemplate]="itemTemplate"
+                [notFoundTemplate]="notFoundTemplate">
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate let-item>
+              <a [innerHTML]="item.puesto"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate let-notFound>
+              <div [innerHTML]="notFound"></div>
+              </ng-template>
+              </div>
+
+            <!-- <select class="form-select" formControlName="lugarVotacion">
+              <option *ngFor="let puesto of arrayPuestos" [value]="puesto.puesto">
+                {{ puesto.puesto }}
+              </option>
+            </select> -->
+            <div
+              *ngIf="form.get('lugarVotacion')?.touched && form.get('lugarVotacion')?.errors?.['required']"
+              class="text-danger"
+            >
+              Campo requerido
+            </div>
+          </div>
+
+          <div class="row mx-0 p-0">
+            <div class="mb-3">
+              <label for="exampleFormControlTextarea1" class="form-label"
+                >Observaciones</label
+              >
+              <textarea
+                class="form-control"
+                id="exampleFormControlTextarea1"
+                rows="3"
+                formControlName="observation"
+                autocomplete="off"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        *ngIf="formUse.get('vehiculoUso')?.value === 'NO'"
+        class="my-5 d-flex justify-content-center"
+      >
+        <button
+          type="button"
+          routerLink="../"
+          class="mx-4 rounded-5 btn-lg btn-warning"
+        >
+          <strong>Volver</strong>
+        </button>
+        <button
+          type="submit"
+          (onClick)="onSubmit(telefono)"
+          [disabled]="form.invalid"
+          [ngClass]="{ 'disabled-button': form.invalid }"
+          class="mx-4 rounded-5 btn-lg btn-primary"
+        >
+          Enviar
+        </button>
+      </div>
+    </form>
+
+    <!-- **********FIN SEGUNDO FORMULARIO SOLICITU DE VEHICULO  ************* -->
+    <!-- **********INICIO DE TERCER FORMULARIO ACTIVAR VEHICULO ************* -->
+
+    <form (ngSubmit)="onSubmitActive()" [formGroup]="formActive">
+      <div *ngIf="formUse.get('vehiculoUso')?.value === 'activar'">
+        <div class="row">
+          <h2 class="my-2">Nombre del conductor que se va activar:</h2>
+
+
+
+          <div class="ng-autocomplete w-100">
+            <ng-autocomplete
+              [data]="conductores"
+              formControlName="nameDriverActive"
+              [searchKeyword]="'name'"
+              placeholder="Seleccione el conductor"
+              [itemTemplate]="itemTemplate"
+              [notFoundTemplate]="notFoundTemplate">
+            </ng-autocomplete>
+
+            <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.name"></a>
+            </ng-template>
+
+            <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+            </ng-template>
+            </div>
+          <!-- <div>
+            <label for="exampleFormControlInput30" class="mt-5 text-center">
+              ¿Nombre del conductor disponible?
+            </label>
+            <select class="form-select" formControlName="nameDriverActive">
+              <option
+                *ngFor="let conductor of conductores"
+                [value]="conductor.name"
+              >
+                {{ conductor.name }}
+              </option>
+            </select>
+          </div> -->
+        </div>
+      </div>
+
+      <div *ngIf="formUse.get('vehiculoUso')?.value === 'activar'" class="row">
+        <div class="my-5 d-flex justify-content-center">
+          <button
+            type="button"
+            routerLink="../"
+            class="mx-4 rounded-5 btn-lg btn-warning"
+          >
+            <strong>Volver</strong>
+          </button>
+          <button
+            type="submit"
+            (onClick)="onSubmitActive()"
+            [disabled]="formActive.invalid"
+            [ngClass]="{ 'disabled-button': formActive.invalid }"
+            class="mx-4 rounded-5 btn-lg btn-success"
+          >
+            Enviar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div *ngIf="formUse.get('vehiculoUso')?.value === 'null'" class="my-5 row">
+  <div class="col-12 d-flex justify-content-center">
+    <button
+      type="button"
+      routerLink="../"
+      class="mx-4 rounded-5 btn-lg btn-warning"
+    >
+      <strong>Volver</strong>
+    </button>
+  </div>
+</div>
